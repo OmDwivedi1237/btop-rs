@@ -1,4 +1,4 @@
-use sysinfo::{System};
+use sysinfo::System;
 
 pub fn get_cpu_usage() -> f32 {
     let mut system = System::new_all();

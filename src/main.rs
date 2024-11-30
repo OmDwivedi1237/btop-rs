@@ -14,6 +14,9 @@ fn main() -> Result<(), io::Error> {
     let mut stdout = stdout();
     stdout.execute(EnterAlternateScreen)?;
 
+    let app_layout = ui::layout::AppLayout::new();  // Create the app layout
+
+
     let backend = CrosstermBackend::new(&mut stdout);
     let mut terminal = Terminal::new(backend)?;
 
@@ -22,8 +25,9 @@ fn main() -> Result<(), io::Error> {
     let mut last_tick = Instant::now();
 
     loop {
+        app_layout.update();
         // draw ui stuff
-        ui::layout::render_ui(&mut terminal)?;
+        ui::layout::render_ui(&mut terminal, &app_layout)?;
 
         let timeout = tick_rate
             .checked_sub(last_tick.elapsed())
