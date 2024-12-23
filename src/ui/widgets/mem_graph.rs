@@ -1,5 +1,7 @@
+// pearCreateFile: src/ui/widgets/memory_graph.rs
+
 use std::collections::VecDeque;
-use crate::system::cpu;
+use crate::system::memory;
 use std::sync::{Arc, Mutex};
 use ratatui::{
     Frame,
@@ -10,32 +12,30 @@ use ratatui::{
     widgets::{Block, Borders, Chart, Dataset, Axis},
 };
 
-pub struct CpuGraph {
+pub struct MemGraph {
     title: String,
 }
 
-impl CpuGraph {
+impl MemGraph {
     pub fn new(title: String) -> Self {
         Self { title }
     }
 
     pub fn render(
         &self,
-        frame: &mut Frame,
+        frame: &mut Frame,  
         area: Rect,
-        cpu_history: &Arc<Mutex<VecDeque<f32>>>
+        mem_history: &Arc<Mutex<VecDeque<f32>>>
     ) {
 
-        let cpu_usage: f32 = cpu::get_cpu_usage();
+        let mem_usage: f32 = memory::get_memory_usage();
 
-        // Safely get the lock or return early if poisoned
-        let cpu_data = match cpu_history.lock() {
+        let mem_data = match mem_history.lock() {
             Ok(guard) => guard,
             Err(_) => return, // Early return if mutex is poisoned
         };
 
-        // Create dataset from CPU history
-        let dataset: Vec<(f64, f64)> = cpu_data
+        let dataset: Vec<(f64, f64)> = mem_data
             .iter()
             .enumerate()
             .map(|(i, &value)| (i as f64, f64::from(value)))
@@ -43,10 +43,10 @@ impl CpuGraph {
 
         let datasets = vec![Dataset::default()
             .data(&dataset)
-            .name("CPU Usage")
+            .name("Memory Usage")
             .marker(symbols::Marker::Braille)
             .graph_type(ratatui::widgets::GraphType::Line)
-            .style(Style::default().fg(Color::Cyan))];
+            .style(Style::default().fg(Color::Magenta))];
 
         let chart = Chart::new(datasets)
             .block(
@@ -58,15 +58,15 @@ impl CpuGraph {
                 Axis::default()
                     .title(Span::styled("Time", Style::default().fg(Color::Gray)))
                     .style(Style::default().fg(Color::Gray))
-                    .bounds([0.0, (cpu_data.len() as f64).max(1.0)])
+                    .bounds([0.0, (mem_data.len() as f64).max(1.0)])
             )
             .y_axis(
                 Axis::default()
-                .title(Span::styled(
-                    format!("CPU Usage: {:.1}%", cpu_usage),
-                    Style::default().fg(Color::Gray)
-                ))
-                                    .style(Style::default().fg(Color::Gray))
+                    .title(Span::styled(
+                        format!("Memory Usage: {:.1}%", mem_usage),
+                        Style::default().fg(Color::Gray)
+                    ))
+                    .style(Style::default().fg(Color::Gray))
                     .bounds([0.0, 100.0])
             );
 

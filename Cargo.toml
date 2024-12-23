@@ -8,14 +8,14 @@ edition = "2021"
 ratatui = "0.29.0"
 
 # getting system information
-sysinfo = "0.32.1"
+sysinfo = "0.33.0"
 
 # config stuff for the app
 serde = { version = "1.0.215", features = ["derive"] }
 toml = "0.8.19"
 
 # async runtime
-tokio = { version = "1.41.1", features = ["full"] }
+tokio = { version = "1.42.0", features = ["full"] }
 
 # logs
 log = "0.4.22"
@@ -24,3 +24,4 @@ env_logger = "0.11.5"
 # extra stuff
 platforms = "3.5.0"
 crossterm = "0.28.1"
+colorgrad = "0.7.0"
