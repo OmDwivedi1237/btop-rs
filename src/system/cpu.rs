@@ -4,7 +4,7 @@ pub fn get_cpu_usage() -> f32 {
     let mut system = System::new_all();
     system.refresh_all();
 
-    std::thread::sleep(std::time::Duration::from_millis(250));
+    std::thread::sleep(std::time::Duration::from_millis(150));
     
     system.refresh_cpu_usage();
     

@@ -21,7 +21,7 @@ fn main() -> Result<(), io::Error> {
     let mut terminal = Terminal::new(backend)?;
 
     // "q" to quit hehehe
-    let tick_rate = Duration::from_millis(250);
+    let tick_rate = Duration::from_millis(50);
     let mut last_tick = Instant::now();
 
     loop {
