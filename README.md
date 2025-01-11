@@ -42,7 +42,7 @@
 
 ### **Binary Releases**
 
-Pre-built binaries will be available in the [Releases](https://github.com/yourusername/rtop/releases) section. Download the binary for your platform and run it directly.
+Pre-built binaries will be available in the Releases section. Download the binary for your platform and run it directly.
 
 ---
 

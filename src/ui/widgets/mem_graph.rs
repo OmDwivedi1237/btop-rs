@@ -1,5 +1,3 @@
-// pearCreateFile: src/ui/widgets/memory_graph.rs
-
 use std::collections::VecDeque;
 use crate::system::memory;
 use std::sync::{Arc, Mutex};
